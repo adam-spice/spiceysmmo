@@ -1,5 +1,5 @@
 const path = require('path');
-const Webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.js',
@@ -11,13 +11,18 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        use: { loader: 'babel-loader' },
+        exclude: /node_modules/,
+      },
+      {
         test: [/\.vert$/, /\.frag$/],
         use: 'raw-loader',
       },
     ],
   },
   plugins: [
-    new Webpack.DefinePlugin({
+    new webpack.DefinePlugin({
       CANVAS_RENDERER: JSON.stringify(true),
       WEBGL_RENDERER: JSON.stringify(true),
     }),
