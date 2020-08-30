@@ -9,7 +9,7 @@ const config = {
       console.log('this is the preload method');
     },
     create,
-  }
+  },
 };
 
 const game = new Phaser.Game(config);
