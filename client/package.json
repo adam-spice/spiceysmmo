@@ -4,7 +4,8 @@
   "description": "client side code for spicey's mmo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx webpack --mode production",
+    "start": "npm run build && npx webpack-dev-server --port=8000 --mode development"
   },
   "keywords": [],
   "author": "",
