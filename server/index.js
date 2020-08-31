@@ -1,10 +1,14 @@
-require('dotenv').config();
-
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
+
+import routes from './routes/main';
+import passwordRoutes from './routes/password';
+import secureRoutes from './routes/secure';
+import './auth/auth';
 
 // setup mongo connection
 const uri = process.env.MONGO_CONNECTION_URL;
@@ -30,10 +34,6 @@ mongoose.set('useFindAndModify', false);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const routes = require('./routes/main');
-const passwordRoutes = require('./routes/password');
-const secureRoutes = require('./routes/secure');
-
 // update express settings
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -41,15 +41,9 @@ app.use(cors({ credentials: true, origin: process.env.CORS_ORIGIN }));
 app.use(cookieParser());
 
 // import passport strategies
-require('./auth/auth');
-
-app.get(
-  '/game.html',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    return res.status(200).json(req.user);
-  },
-);
+app.get('/game.html', passport.authenticate('jwt', { session: false }), (req, res) => {
+  return res.status(200).json(req.user);
+});
 
 app.use(express.static(`${__dirname}/public`));
 
@@ -68,6 +62,7 @@ app.use((req, res) => {
 });
 
 // error handler
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message, status: 500 });
   console.error(err);

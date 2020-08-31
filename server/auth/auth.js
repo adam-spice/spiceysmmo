@@ -1,13 +1,13 @@
-const passport = require('passport');
-const localStrategy = require('passport-local').Strategy;
-const jwtStrategy = require('passport-jwt').Strategy;
+import passport from 'passport';
+import localStrategy from 'passport-local';
+import jwtStrategy from 'passport-jwt';
 
-const UserModel = require('../models/UserModel');
+import UserModel from '../models/UserModel';
 
 // handle user registration
 passport.use(
   'signup',
-  new localStrategy(
+  new localStrategy.Strategy(
     {
       usernameField: 'email',
       passwordField: 'password',
@@ -21,8 +21,8 @@ passport.use(
       } catch (error) {
         return done(error);
       }
-    },
-  ),
+    }
+  )
 );
 
 // handle user login
@@ -47,13 +47,13 @@ passport.use(
       } catch (error) {
         return done(error);
       }
-    },
-  ),
+    }
+  )
 );
 
 // verify jwt token
 passport.use(
-  new jwtStrategy(
+  new jwtStrategy.Strategy(
     {
       secretOrKey: process.env.JWT_SECRET,
       jwtFromRequest: (req) => {
@@ -68,6 +68,6 @@ passport.use(
       } catch (error) {
         return done(error);
       }
-    },
-  ),
+    }
+  )
 );

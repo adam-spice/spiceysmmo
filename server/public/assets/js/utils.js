@@ -1,9 +1,11 @@
+/* eslint-disable  */
+
 function postData(url = '', data = {}) {
   return fetch(url, {
     method: 'POST',
     mode: 'cors',
     cache: 'no-cache',
-    credentials: 'include', //needed for cookies
+    credentials: 'include', // needed for cookies
     headers: {
       'Content-Type': 'application/json',
     },

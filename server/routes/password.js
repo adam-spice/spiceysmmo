@@ -1,10 +1,10 @@
-const express = require('express');
-const hbs = require('nodemailer-express-handlebars');
-const nodemailer = require('nodemailer');
-const path = require('path');
-const crypto = require('crypto');
+import express from 'express';
+import hbs from 'nodemailer-express-handlebars';
+import nodemailer from 'nodemailer';
+import path from 'path';
+import crypto from 'crypto';
 
-const UserModel = require('../models/UserModel');
+import UserModel from '../models/UserModel';
 
 const email = process.env.EMAIL;
 const password = process.env.PASSWORD;
@@ -43,10 +43,10 @@ router.post('/forgot-password', async (req, res) => {
   // update user reset password token and exp
   await UserModel.findByIdAndUpdate(
     { _id: user._id },
-    { resetToken: token, resetTokenExp: Date.now() + 600000 },
+    { resetToken: token, resetTokenExp: Date.now() + 600000 }
   );
 
-  //send user password rest email
+  // send user password rest email
   const emailOptions = {
     to: userEmail,
     from: email,
@@ -54,9 +54,7 @@ router.post('/forgot-password', async (req, res) => {
     subject: `Spicey's mmo forgot password email`,
     context: {
       name: 'adam',
-      url: `http://localhost:${
-        process.env.PORT || 3000
-      }/reset-password.html?token=${token}`,
+      url: `http://localhost:${process.env.PORT || 3000}/reset-password.html?token=${token}`,
     },
   };
   await smtpTransport.sendMail(emailOptions);
@@ -85,9 +83,7 @@ router.post('/reset-password', async (req, res) => {
     !req.body.verifiedPassword ||
     req.body.password !== req.body.verifiedPassword
   ) {
-    return res
-      .status(400)
-      .json({ message: 'Passwords do not match', status: 400 });
+    return res.status(400).json({ message: 'Passwords do not match', status: 400 });
   }
   // update user model
   user.password = req.body.password;
@@ -111,4 +107,4 @@ router.post('/reset-password', async (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;
