@@ -1,0 +1,15 @@
+{
+  "extends": "airbnb-base",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "no-console": "off",
+    "no-param-reassign": "off",
+    "no-alert": "off",
+    "no-undef": "off",
+    "object-curly-newline": "off",
+    "operator-linebreak": [2, "after"],
+    "arrow-parens": "off"
+  }
+}

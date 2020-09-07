@@ -4,10 +4,12 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
+import SocketIO from 'socket.io';
 
 import routes from './routes/main';
 import passwordRoutes from './routes/password';
 import secureRoutes from './routes/secure';
+import GameManager from './game_manager/GameManager';
 import './auth/auth';
 
 // setup mongo connection
@@ -33,6 +35,12 @@ mongoose.set('useFindAndModify', false);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const server = require('http').Server(app);
+
+const io = new SocketIO(server);
+
+const gameManager = new GameManager(io);
+gameManager.setup();
 
 // update express settings
 app.use(express.urlencoded({ extended: false }));
@@ -70,7 +78,7 @@ app.use((err, req, res, next) => {
 
 mongoose.connection.on('connected', () => {
   console.log('connected to mongo');
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`The server is running on port ${PORT}`);
   });
 });
