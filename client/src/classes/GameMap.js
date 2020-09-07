@@ -32,10 +32,7 @@ export default class GameMap {
 
     // limit the camera to the size of our map
     this.scene.cameras.main.setBounds(
-      0,
-      0,
-      this.tilemap.widthInPixels * 2,
-      this.tilemap.heightInPixels * 2
+      0, 0, this.tilemap.widthInPixels * 2, this.tilemap.heightInPixels * 2,
     );
   }
 }

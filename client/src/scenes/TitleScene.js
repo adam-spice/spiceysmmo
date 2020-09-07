@@ -1,5 +1,6 @@
 import * as Phaser from 'phaser';
 import UiButton from '../classes/UiButton';
+import { getParam } from '../utils/utils';
 
 export default class TitleScene extends Phaser.Scene {
   constructor() {
@@ -8,22 +9,38 @@ export default class TitleScene extends Phaser.Scene {
 
   create() {
     // create title text
-    this.titleText = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Zenva MMORPG', {
+    this.titleText = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Spiceys MMORPG', {
       fontSize: '64px',
       fill: '#fff',
     });
     this.titleText.setOrigin(0.5);
 
-    // create the Play game button
-    this.startGameButton = new UiButton(
+    // create a login button
+    this.loginButton = new UiButton(
       this,
       this.scale.width / 2,
       this.scale.height * 0.65,
       'button1',
       'button2',
-      'Start',
-      this.startScene.bind(this, 'Game')
+      'Login',
+      this.startScene.bind(this, 'Login'),
     );
+
+    // create a sign up button
+    this.signUpButton = new UiButton(
+      this,
+      this.scale.width / 2,
+      this.scale.height * 0.8,
+      'button1',
+      'button2',
+      'Sign Up',
+      this.startScene.bind(this, 'SignUp'),
+    );
+
+    const resetPasswordSceneCheck = getParam('scene');
+    if (resetPasswordSceneCheck && resetPasswordSceneCheck === 'resetPassword') {
+      this.scene.start('ResetPassword');
+    }
   }
 
   startScene(targetScene) {

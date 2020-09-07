@@ -127,7 +127,7 @@ export default class GameManager {
         config,
         this.chestLocations[key],
         this.addChest.bind(this),
-        this.deleteChest.bind(this)
+        this.deleteChest.bind(this),
       );
       this.spawners[spawner.id] = spawner;
     });
@@ -142,7 +142,7 @@ export default class GameManager {
         this.monsterLocations[key],
         this.addMonster.bind(this),
         this.deleteMonster.bind(this),
-        this.moveMonsters.bind(this)
+        this.moveMonsters.bind(this),
       );
       this.spawners[spawner.id] = spawner;
     });
